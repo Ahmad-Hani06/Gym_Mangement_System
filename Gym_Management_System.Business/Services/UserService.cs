@@ -66,8 +66,6 @@ namespace Gym_Management_System.Business.Services
 
             return result;
         }
-
-
         public async Task<List<UserResponseDto>> GetAllUsersAsync()
         {
             var usersList = await _userData.GetAllUsersAsync();
@@ -90,6 +88,29 @@ namespace Gym_Management_System.Business.Services
             }
 
             return responseDto;
+        }
+
+        public async Task<UserResponseDto?> GetUserByUserIdAsync(int userId)
+        {
+            var user = await _userData.GetUserByUserIdAsync(userId);
+
+            if (user == null)
+                return null;
+
+            UserResponseDto userResponseDto = new UserResponseDto()
+            {
+                UserId = user.UserId,
+                PersonId = user.PersonId,
+                FirstName = user.Person.FirstName,
+                LastName = user.Person.LastName,
+                UserName = user.UserName,
+                Role = user.Role,
+                IsActive = user.IsActive,
+                CreatedAt = user.CreatedAt
+            };
+
+            return userResponseDto;
+
         }
 
     }

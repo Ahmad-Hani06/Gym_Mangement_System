@@ -28,3 +28,4 @@ C:\Users\2025\Desktop\Gym Management System\Gym_Management_System.DataAccess\obj
 C:\Users\2025\Desktop\Gym Management System\Gym_Management_System.DataAccess\obj\Debug\net10.0\Gym_Management_System.DataAccess.genruntimeconfig.cache
 C:\Users\2025\Desktop\Gym Management System\Gym_Management_System.DataAccess\obj\Debug\net10.0\ref\Gym_Management_System.DataAccess.dll
 C:\Users\2025\Desktop\Gym Management System\Gym_Management_System.DataAccess\obj\Debug\net10.0\Gym_Mana.F5E7B7C6.Up2Date
+C:\Users\2025\Desktop\Gym Management System\Gym_Management_System.DataAccess\obj\Debug\net10.0\Gym_Management_System.DataAccess.sourcelink.json

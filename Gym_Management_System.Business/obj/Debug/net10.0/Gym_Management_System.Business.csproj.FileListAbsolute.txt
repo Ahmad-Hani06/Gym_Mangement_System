@@ -28,3 +28,4 @@ C:\Users\2025\Desktop\Gym Management System\Gym_Management_System.Business\obj\D
 C:\Users\2025\Desktop\Gym Management System\Gym_Management_System.Business\obj\Debug\net10.0\refint\Gym_Management_System.Business.dll
 C:\Users\2025\Desktop\Gym Management System\Gym_Management_System.Business\obj\Debug\net10.0\Gym_Management_System.Business.pdb
 C:\Users\2025\Desktop\Gym Management System\Gym_Management_System.Business\obj\Debug\net10.0\ref\Gym_Management_System.Business.dll
+C:\Users\2025\Desktop\Gym Management System\Gym_Management_System.Business\obj\Debug\net10.0\Gym_Management_System.Business.sourcelink.json

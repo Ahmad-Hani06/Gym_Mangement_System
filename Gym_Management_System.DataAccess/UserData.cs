@@ -28,7 +28,7 @@ namespace Gym_Management_System.DataAccess
             return result;
         }
 
-        public async Task<bool> UpdateUserStatusAsync(int UserId,bool isActive)
+        public async Task<bool> UpdateUserStatusAsync(int UserId, bool isActive)
         {
             var user = await _context.Users.FirstOrDefaultAsync(u => u.UserId == UserId);
 
@@ -48,5 +48,10 @@ namespace Gym_Management_System.DataAccess
             return users;
         }
 
+
+        public async Task<User?> GetUserByUserIdAsync(int userId)
+        {
+            return await _context.Users.AsNoTracking().Include(u => u.Person).FirstOrDefaultAsync(u => u.UserId == userId);
+        }
     }
 }

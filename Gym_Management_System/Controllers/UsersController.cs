@@ -5,6 +5,7 @@ using Gym_Management_System.DataAccess;
 using Gym_Management_System.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.FileProviders;
 
 namespace Gym_Management_System.Controllers
 {
@@ -67,7 +68,19 @@ namespace Gym_Management_System.Controllers
             return Ok(users);
         }
 
+        [HttpGet("GetUserBy/{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
 
+        public async Task<IActionResult> GetUserByUserId(int id)
+        {
+            var user = await _userService.GetUserByUserIdAsync(id);
+            if (user == null)
+                return NotFound($"User {id} is not found");
+
+            return Ok(user);
+
+        }
 
     }
 }
