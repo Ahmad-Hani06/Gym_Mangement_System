@@ -75,5 +75,19 @@ namespace Gym_Management_System.DataAccess
             return result;
         }
 
+
+        public async Task<bool> ChangeUserUserNameAsync(int id, string UserName)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.UserId == id);
+
+            if (user == null)
+                return false;
+
+            user.UserName = UserName;
+
+            await _context.SaveChangesAsync();
+
+            return true;
+        }
     }
 }

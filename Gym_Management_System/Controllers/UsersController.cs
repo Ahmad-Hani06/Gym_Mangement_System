@@ -92,5 +92,16 @@ namespace Gym_Management_System.Controllers
 
             return NoContent();
         }
+        [HttpPatch("{id}/reset-username")]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public async Task<IActionResult> ChangeUserName(int id, string username)
+        {
+            var result = await _userService.ChangeUserNameAsync(id, username);
+            if (!result)
+                return NotFound($"User {id} is not found");
+
+            return NoContent();
+        }
     }
 }

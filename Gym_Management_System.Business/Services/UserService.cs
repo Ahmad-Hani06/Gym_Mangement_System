@@ -124,5 +124,15 @@ namespace Gym_Management_System.Business.Services
             bool result = await _userData.ChangeUserPasswordAsync(id, PasswordHashing.ComputeHash(password));
             return result;
         }
+        public async Task<bool> ChangeUserNameAsync(int id, string UserName)
+        {
+            if (!await _userData.IsUserExistsByUserIdAsync(id))
+            {
+                return false;
+            }
+
+            bool result = await _userData.ChangeUserUserNameAsync(id,UserName);
+            return result;
+        }
     }
 }
