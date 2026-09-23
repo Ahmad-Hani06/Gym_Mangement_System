@@ -3,6 +3,7 @@ using Gym_Management_System.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace Gym_Management_System.DataAccess
@@ -53,5 +54,26 @@ namespace Gym_Management_System.DataAccess
         {
             return await _context.Users.AsNoTracking().Include(u => u.Person).FirstOrDefaultAsync(u => u.UserId == userId);
         }
+
+        public async Task<bool> ChangeUserPasswordAsync(int id, string PasswordHash)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.UserId == id);
+
+            if (user == null)
+                return false;
+
+            user.PasswordHash = PasswordHash;
+
+            await _context.SaveChangesAsync();
+
+            return true;
+        }
+
+        public async Task<bool> IsUserExistsByUserIdAsync(int id)
+        {
+            bool result = await _context.Users.AsNoTracking().Where(u => u.UserId == id).AnyAsync();
+            return result;
+        }
+
     }
 }
