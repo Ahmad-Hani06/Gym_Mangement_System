@@ -69,9 +69,9 @@ namespace Gym_Management_System.Controllers
         }
 
         [HttpGet("GetUserBy/{id}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        
         public async Task<IActionResult> GetUserByUserId(int id)
         {
             var user = await _userService.GetUserByUserIdAsync(id);
@@ -79,8 +79,18 @@ namespace Gym_Management_System.Controllers
                 return NotFound($"User {id} is not found");
 
             return Ok(user);
-
         }
 
+        [HttpPatch("{id}/reset-password")]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public async Task<IActionResult> ChangeUserPassword(int id, string password)
+        {
+            var result = await _userService.ChangeUserPasswordAsync(id, password);
+            if (!result)
+                return NotFound($"User {id} is not found");
+
+            return NoContent();
+        }
     }
 }
