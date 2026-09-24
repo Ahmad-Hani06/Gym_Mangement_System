@@ -50,5 +50,18 @@ namespace Gym_Management_System.Controllers
        
             return Ok(coaches);
         }
-}
+
+        [HttpGet("GetCoachById/{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+
+        public async Task<IActionResult> GetCoachById(int id)
+        {
+            var coach = await _coachService.GetCoachById(id);
+            if (coach == null)
+                return NotFound("Coach not found.");
+            return Ok(coach);
+        }
+
+    }
 }

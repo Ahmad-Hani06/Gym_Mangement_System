@@ -66,5 +66,24 @@ namespace Gym_Management_System.Business.Services
 
             return coachResponseDtos;
         }
+
+        public async Task<CoachResponseDto?> GetCoachById(int id)
+        {
+            var coach = await _coachData.GetCoachById(id);
+            if (coach == null)
+                return null;
+            CoachResponseDto coachDto = new CoachResponseDto()
+            {
+                CoachId = coach.CoachId,
+                PersonId = coach.PersonId,
+                FirstName = coach.Person.FirstName,
+                LastName = coach.Person.LastName,
+                Phone = coach.Person.Phone,
+                HireDate = coach.HireDate,
+                IsActive = coach.IsActive ? "Active" : "Inactive",
+                Notes = coach.Notes
+            };
+            return coachDto;
+        }
     }
 }
