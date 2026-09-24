@@ -17,9 +17,9 @@ namespace Gym_Management_System.Controllers
 
         [HttpPost("Add Membership")]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        public async Task<IActionResult> AddMemberShip(MembershipDto membershipDto)
+        public async Task<IActionResult> AddMemberShip([FromBody] MembershipDto membershipDto,[FromQuery] int UserId)
         {
-            var membershipResponse = await _membershipService.AddMembershipAsync(membershipDto);
+            var membershipResponse = await _membershipService.AddMembershipAsync(membershipDto, UserId);
 
             return StatusCode(StatusCodes.Status201Created, membershipResponse);
         }

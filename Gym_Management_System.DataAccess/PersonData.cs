@@ -16,7 +16,6 @@ namespace Gym_Management_System.DataAccess
         {
             _context = context;
         }
-
         public async Task<int> AddPersonAsync(Person person)
         {
             await _context.Persons.AddAsync(person);
@@ -25,8 +24,6 @@ namespace Gym_Management_System.DataAccess
 
             return person.PersonId;
         }
-
-
         public async Task<Person?> CheckIfPersonExistsByNameAsync(string FirstName, string LastName)
         {
             var person = await _context.Persons.Where(p => p.FirstName == FirstName && p.LastName == LastName).FirstOrDefaultAsync();
@@ -36,8 +33,6 @@ namespace Gym_Management_System.DataAccess
 
             return person;
         }
-
-
         public async Task<bool> CheckIfPersonExistsByIdAsync(int Id)
         {
             var person = await _context.Persons.Where(p => p.PersonId == Id).FirstOrDefaultAsync();
@@ -46,6 +41,23 @@ namespace Gym_Management_System.DataAccess
                 return false;
 
             return true;
+        }
+
+        public async Task<bool> DeletePersonByPersonId(int personId)
+        {
+            var person = await _context.Persons.Where(p => p.PersonId == personId).FirstOrDefaultAsync();
+
+            if (person == null)
+                return false;
+
+            _context.Persons.Remove(person);
+
+            return await _context.SaveChangesAsync() > 0;
+        }
+
+        public async Task<bool> HasRelatedRecordsAsync(int personId)
+        {
+            return await _context.Persons.AsNoTracking().AnyAsync(p => p.PersonId == personId && (p.Member != null || p.User != null || p.Coach != null));
         }
     }
 }

@@ -22,11 +22,11 @@ namespace Gym_Management_System.Business.Services
             _paymentService = paymentService;
         }
 
-        private async Task<MembershipResponseDto> AddNewMembership(MembershipDto membershipDto, int durationMonths, decimal Price)
+        private async Task<MembershipResponseDto> AddNewMembership(MembershipDto membershipDto, int durationMonths, decimal Price, int userId)
         {
 
             DateTime startDate = DateTime.Now;
-            Membership membership = new Membership() // I will Update UserID here 
+            Membership membership = new Membership() 
             {
                 MemberId = membershipDto.MemberId,
                 SubscriptionTypeId = membershipDto.SubscriptionTypeId,
@@ -35,7 +35,7 @@ namespace Gym_Management_System.Business.Services
                 Price = Price,
                 Status = "Active",
                 Notes = membershipDto.Notes,
-                CreatedByUserId = 1
+                CreatedByUserId = userId
             };
 
 
@@ -53,12 +53,12 @@ namespace Gym_Management_System.Business.Services
             
         }
 
-        private async Task<int> AddPayment(int memebrshipId,decimal price) // i will update UserID 
+        private async Task<int> AddPayment(int memebrshipId,decimal price, int UserId) 
         {
             Payment payment = new Payment()
             {
                 MembershipId = memebrshipId,
-                CreatedByUserId = 1,
+                CreatedByUserId = UserId,
                 Amount = price,
                 PaymentDate = DateTime.Now,
                 Notes = "Paid"
@@ -67,7 +67,7 @@ namespace Gym_Management_System.Business.Services
             int paymentId = await _paymentService.AddPaymentAsync(payment);
             return paymentId;
         }
-        public async Task<MembershipResponseDto> AddMembershipAsync(MembershipDto membershipDto)
+        public async Task<MembershipResponseDto> AddMembershipAsync(MembershipDto membershipDto, int UserId)
         {
 
             using var transaction = await _membershipData._context.Database.BeginTransactionAsync();
@@ -98,9 +98,9 @@ namespace Gym_Management_System.Business.Services
                 decimal Price = await _subscriptionTypeData.GetSubscriptionTypePriceAsync(membershipDto.SubscriptionTypeId);
 
 
-                var ResponseDto = await AddNewMembership(membershipDto, durationMonths.Value, Price);
+                var ResponseDto = await AddNewMembership(membershipDto, durationMonths.Value, Price, UserId);
 
-                await AddPayment(ResponseDto.MembershipId, Price);
+                await AddPayment(ResponseDto.MembershipId, Price, UserId);
                 
                 await transaction.CommitAsync();
 

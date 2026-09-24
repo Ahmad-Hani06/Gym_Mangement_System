@@ -53,8 +53,26 @@ namespace Gym_Management_System.Business.Services
             return personID;
         }
 
+        public async Task<(bool Deleted, string Message)> DeletePersonAsync(int personId)
+        {
+            bool exists = await _personData.CheckIfPersonExistsByIdAsync(personId);
+            if (!exists)
+                return (false, "Person not found.");
 
-        
+            bool hasRelatedRecords = await _personData.HasRelatedRecordsAsync(personId);
+
+            if (hasRelatedRecords)
+                return (false, "Person is linked to another record.");
+
+
+            bool deleted = await _personData.DeletePersonByPersonId(personId);
+
+            return deleted ? (true, "Person deleted successfully.") : (false, "Person could not be deleted.");
+
+        }
+
+
+
 
     }
 }

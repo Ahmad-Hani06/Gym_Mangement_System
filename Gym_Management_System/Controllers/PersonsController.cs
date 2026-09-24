@@ -40,5 +40,24 @@ namespace Gym_Management_System.Controllers
         }
 
 
+        [HttpDelete("DeletePerson/{personId}")]
+
+        public async Task<IActionResult> DeletePersonAsync(int personId)
+        {
+            var result = await _personService.DeletePersonAsync(personId);
+           
+            if (result.Deleted)
+                return NoContent();
+
+            if (result.Message == "Person not found.")
+                return NotFound(result.Message);
+
+            if (result.Message == "Person is linked to another record.")
+                return Conflict(result.Message);
+
+            return StatusCode(StatusCodes.Status500InternalServerError, result.Message);
+
+        }
+
     }
 }
