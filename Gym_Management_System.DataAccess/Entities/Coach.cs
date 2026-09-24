@@ -11,6 +11,9 @@ public partial class Coach
 
     public DateTime HireDate { get; set; }
 
+    public bool IsActive { get; set; }
+
+
     public string? Notes { get; set; }
 
     public virtual Person Person { get; set; } = null!;

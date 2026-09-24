@@ -28,6 +28,8 @@ builder.Services.AddScoped<PaymentService>();
 builder.Services.AddScoped<PaymentData>(); 
 builder.Services.AddScoped<UserService>(); 
 builder.Services.AddScoped<UserData>(); 
+builder.Services.AddScoped<CoachService>(); 
+builder.Services.AddScoped<CoachData>(); 
 
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
