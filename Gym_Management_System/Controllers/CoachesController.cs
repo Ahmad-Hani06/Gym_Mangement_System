@@ -40,5 +40,15 @@ namespace Gym_Management_System.Controllers
                 Message = result.Message
             });
         }
-    }
+
+        [HttpGet("GetAllCoaches")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+
+        public async Task<IActionResult> GetAllCoaches()
+        {
+            var coaches = await _coachService.GetAllCoaches();
+       
+            return Ok(coaches);
+        }
+}
 }

@@ -30,7 +30,9 @@ namespace Gym_Management_System.DataAccess
             return await _context.Coaches.AnyAsync(c => c.PersonId == id);
         }
 
-
-
+        public async Task<List<Coach>> GetAllCoaches()
+        {
+            return await _context.Coaches.AsNoTracking().Include(c => c.Person).ToListAsync();
+        }
     }
 }

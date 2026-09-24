@@ -41,6 +41,30 @@ namespace Gym_Management_System.Business.Services
             return (coachId, "Coach added successfully");
         }
 
+        public async Task<List<CoachResponseDto>> GetAllCoaches()
+        {
+            var coaches = await _coachData.GetAllCoaches();
 
+            List<CoachResponseDto> coachResponseDtos = new List<CoachResponseDto>();
+
+            foreach (var coach in coaches)
+            {
+                CoachResponseDto coachDto = new CoachResponseDto()
+                {
+                    CoachId = coach.CoachId,
+                    PersonId = coach.PersonId,
+                    FirstName = coach.Person.FirstName,
+                    LastName = coach.Person.LastName,
+                    Phone = coach.Person.Phone,
+                    HireDate = coach.HireDate,
+                    IsActive = coach.IsActive ? "Active" : "Inactive",
+                    Notes = coach.Notes
+                };
+
+                coachResponseDtos.Add(coachDto);
+            }
+
+            return coachResponseDtos;
+        }
     }
 }
