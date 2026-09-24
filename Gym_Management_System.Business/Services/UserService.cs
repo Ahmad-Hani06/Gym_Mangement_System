@@ -51,13 +51,23 @@ namespace Gym_Management_System.Business.Services
 
         public async Task<bool> UpdateUserStatus(int userId, string status)
         {
-            bool isActive = false;
+
+            if(!await _userData.IsUserExistsByUserIdAsync(userId))
+            {
+                return false;
+            }
+
+            bool isActive;
 
             if (status.ToLower() == "active")
                 isActive = true;
 
             else if (status.ToLower() == "inactive")
                 isActive = false;
+
+            else
+                throw new ArgumentException("Status must be 'active' or 'inactive'.");
+
 
             bool result = await _userData.UpdateUserStatusAsync(userId, isActive);
 

@@ -63,5 +63,18 @@ namespace Gym_Management_System.Controllers
             return Ok(coach);
         }
 
+        [HttpPatch("UpdateCoachActivityStatus/{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+
+        public async Task<IActionResult> UpdateCoachActivityStatus(int id, string status)
+        {
+            var result = await _coachService.UpdateCoachActivityStatus(id, status);
+            if (!result)
+                return NotFound("Coach not found.");
+            return NoContent();
+        }
+
+
     }
 }

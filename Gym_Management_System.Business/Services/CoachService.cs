@@ -85,5 +85,25 @@ namespace Gym_Management_System.Business.Services
             };
             return coachDto;
         }
+
+        public async Task<bool> UpdateCoachActivityStatus(int id, string status)
+        {
+
+            if (!await _coachData.IsCoachExistsByCoachId(id))
+                return false;
+
+            bool isActive;
+
+            if (status.ToLower() == "active")
+                isActive = true;
+            else if(status.ToLower() == "inactive")
+                isActive = false;
+
+            else
+                throw new ArgumentException("Status must be 'active' or 'inactive'.");
+
+            return await _coachData.UpdateCoachActvityStatus(id, isActive);
+        }
+
     }
 }

@@ -40,5 +40,24 @@ namespace Gym_Management_System.DataAccess
             return await _context.Coaches.AsNoTracking().Include(c => c.Person).FirstOrDefaultAsync(c => c.CoachId == id);
         }
 
+        public async Task<bool> UpdateCoachActvityStatus(int id, bool status)
+        {
+           var coach = await _context.Coaches.Where(c => c.CoachId == id).FirstOrDefaultAsync();
+    
+            if (coach == null) 
+                 return false;
+
+            coach.IsActive = status;
+
+            await _context.SaveChangesAsync();
+
+            return true;
+        }
+
+        public async Task<bool> IsCoachExistsByCoachId(int id)
+        {
+            return await _context.Coaches.AnyAsync(c => c.CoachId == id);
+        }
+
     }
 }
