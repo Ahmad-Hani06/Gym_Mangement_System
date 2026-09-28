@@ -3,12 +3,14 @@ using Gym_Management_System.Business.DTOs;
 using Gym_Management_System.Business.Services;
 using Gym_Management_System.DataAccess;
 using Gym_Management_System.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.FileProviders;
 
 namespace Gym_Management_System.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class UsersController : ControllerBase

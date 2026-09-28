@@ -1,5 +1,6 @@
 ﻿using Gym_Management_System.Business.DTOs;
 using Gym_Management_System.Business.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics.Eventing.Reader;
@@ -7,6 +8,7 @@ using System.Reflection.Metadata.Ecma335;
 
 namespace Gym_Management_System.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class SubscriptionTypesController : ControllerBase

@@ -75,6 +75,17 @@ namespace Gym_Management_System.DataAccess
             return result;
         }
 
+        public async Task<User?> FindUserByUserNameAndPasswordAsync(string UserName, string Password)
+        {
+            var User = await _context.Users.AsNoTracking().Where(u => u.UserName == UserName && u.PasswordHash == Password).FirstOrDefaultAsync();
+
+            if (User == null)
+                return null;
+
+            return User;
+        }
+
+
 
         public async Task<bool> ChangeUserUserNameAsync(int id, string UserName)
         {

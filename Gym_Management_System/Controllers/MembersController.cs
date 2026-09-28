@@ -2,9 +2,11 @@
 using Gym_Management_System.Business;
 using Gym_Management_System.Business.Services;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Gym_Management_System.Controllers
 {
+    [Authorize]
     [Route("api/[Controller]")]
     [ApiController]
     public class MembersController : ControllerBase

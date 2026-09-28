@@ -1,7 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Gym_Management_System.DataAccess.Entities;
 using Gym_Management_System.Entities;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
 
 namespace Gym_Management_System.Data;
 
@@ -25,6 +26,8 @@ public partial class AppDbContext : DbContext
     public virtual DbSet<SubscriptionType> SubscriptionTypes { get; set; }
 
     public virtual DbSet<User> Users { get; set; }
+
+    public virtual DbSet<RefreshToken> RefreshTokens { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -140,6 +143,34 @@ public partial class AppDbContext : DbContext
                 .HasForeignKey<User>(d => d.PersonId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Users_Persons");
+        });
+
+        modelBuilder.Entity<RefreshToken>(entity =>
+        {
+            entity.HasKey(e => e.RefreshTokenId);
+
+            entity.HasIndex(e => e.TokenHash).IsUnique();
+
+            entity.Property(e => e.RefreshTokenId)
+                .HasColumnName("RefreshTokenId");
+
+            entity.Property(e => e.UserId)
+                .HasColumnName("UserId");
+
+            entity.Property(e => e.TokenHash)
+                .HasMaxLength(500);
+
+            entity.Property(e => e.ExpiresAt)
+                .HasColumnType("datetime2");
+
+            entity.Property(e => e.IsRevoked)
+                .HasDefaultValue(false);
+
+            entity.HasOne(d => d.User)
+                .WithMany(p => p.RefreshTokens)
+                .HasForeignKey(d => d.UserId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_RefreshTokens_Users");
         });
 
         OnModelCreatingPartial(modelBuilder);

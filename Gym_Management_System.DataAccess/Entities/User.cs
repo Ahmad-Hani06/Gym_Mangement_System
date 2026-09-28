@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Gym_Management_System.DataAccess.Entities;
+using System;
 using System.Collections.Generic;
 
 namespace Gym_Management_System.Entities;
@@ -24,4 +25,6 @@ public partial class User
     public virtual ICollection<Payment> Payments { get; set; } = new List<Payment>();
 
     public virtual Person Person { get; set; } = null!;
+    public virtual ICollection<RefreshToken> RefreshTokens { get; set; }
+    = new List<RefreshToken>();
 }

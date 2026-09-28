@@ -1,10 +1,12 @@
 ﻿using Gym_Management_System.Business.DTOs;
 using Gym_Management_System.Business.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Gym_Management_System.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class PersonsController : ControllerBase
@@ -40,8 +42,11 @@ namespace Gym_Management_System.Controllers
         }
 
 
+
+
         [HttpDelete("DeletePerson/{personId}")]
 
+        [Authorize (Roles = "Admin")]
         public async Task<IActionResult> DeletePersonAsync(int personId)
         {
             var result = await _personService.DeletePersonAsync(personId);
